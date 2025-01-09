@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Dashboard</title>
+    <link rel="stylesheet" href="s.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Section -->
+        <div class="sidebar">
+            <h2>Sheet Links</h2>
+            <ul>
+                <li><a href="#">Sheet 1</a></li>
+                <li><a href="#">Sheet 2</a></li>
+                <li><a href="#">Sheet 3</a></li>
+                <li><a href="#">Sheet 4</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Dashboard Section -->
+        <div class="dashboard">
+            <h1>Production Dashboard</h1>
+            
+            <!-- Date Filter Section -->
+            <div class="date-filter">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date">
+                <button onclick="applyDateFilter()">Apply Filter</button>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats">
+                <div class="stat-card">
+                    <h2>Total Orders</h2>
+                    <p id="total-orders">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Qty Ordered</h2>
+                    <p id="total-qty-ordered">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Dispatch</h2>
+                    <p id="total-dispatch">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Production Press 1</h2>
+                    <p id="total-production-press1">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Production Press 2</h2>
+                    <p id="total-production-press2">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
