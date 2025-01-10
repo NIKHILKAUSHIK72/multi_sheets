@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     // CSV URLs for each sheet
     const ordersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?output=csv&sheet=Orders";
-    const dispatchUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?gid=1101298167&single=true&output=csv&sheet=dispatch";
-    const press2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?gid=830090478&single=true&output=csv&sheet=press2";
-    const press1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?output=csv&sheet=press2";
+    const dispatchUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2J8Z-INbVaBrtmbGrmC9t2sI4mRViIOVX06WFrA0YHp_QQCoKU3S8rVBs0sTdoaqr1IbKsO7sF739/pub?output=csv&sheet=dispatch";
+    const press1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQpc9Aae1lrFH02QdDZfKZArdJ-geR16N1demUx4pJs5SUSVLOC5RfvCqNpiLdwmRvtnF4gDV7pza76/pub?gid=0&single=true&output=csv&sheet=press1";
+    const press2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVvFtjgnm2hoAifaAxSmQeEgi2JBbVyfafZcgGA1AgGX04zOqoRM0ZDOjGdrDlLVkuPwDYMaGGY26i/pub?gid=0&single=true&output=csv&sheet=press2";
  //   const qtyUrl="https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?gid=1792096651&single=true&output=csv&sheet=quantity";
     
     // Fetch data from multiple sheets (CSV)
