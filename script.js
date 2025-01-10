@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Calculate total dispatch from Dispatch sheet (assuming column 1 contains dispatch data)
     function calculateTotalDispatch(data) {
-        return data.slice(1).reduce((sum, row) => sum + (parseInt(row[0]) || 0), 0);
+        return data.slice(1).reduce((sum, row) => sum + (parseInt(row[1]) || 0), 0);
     }
 
     // Calculate total production (from Production Press sheets, assuming column 1 contains production values)
