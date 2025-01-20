@@ -21,27 +21,20 @@ document.addEventListener("DOMContentLoaded", function() {
         press1Rows = parseCSV(press1Data);
         press2Rows = parseCSV(press2Data);
 
-        
-        updateDashboard();
+        updateDashboard(); // Update dashboard when data is fetched
     })
     .catch(error => {
         console.error("Error fetching data: ", error);
     });
 
-    
     function parseCSV(csvData) {
         return csvData.split('\n').map(row => row.split(','));
     }
 
-    
     function filterDataByDate() {
         const startDate = document.getElementById('start-date').value;
         const endDate = document.getElementById('end-date').value;
 
-        console.log("Start Date: ", startDate);
-        console.log("End Date: ", endDate);
-
-        
         if (!startDate && !endDate) {
             return { orders: [], dispatch: [], press1: [], press2: [] }; 
         }
@@ -51,12 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const filteredPress1 = filterPressDataByDate(press1Rows, startDate, endDate, 'HP01');
         const filteredPress2 = filterPressDataByDate(press2Rows, startDate, endDate, 'HP02');
 
-        
-        console.log("Filtered Orders: ", filteredOrders);
-        console.log("Filtered Dispatch: ", filteredDispatch);
-        console.log("Filtered Press1 (HP01): ", filteredPress1);
-        console.log("Filtered Press2 (HP02): ", filteredPress2);
-
         return {
             orders: filteredOrders,
             dispatch: filteredDispatch,
@@ -65,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 
-    
     function filterOrdersByDate(data, startDate, endDate) {
         const dateColumnIndex = 0;  // Orders Date is in column 0
         return data.filter((row, index) => {
@@ -73,12 +59,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const orderDateStr = row[dateColumnIndex];
             const orderDate = parseDate(orderDateStr);
-
             return isWithinDateRange(orderDate, startDate, endDate);
         });
     }
 
-    // Filter Dispatch by Date
     function filterDispatchByDate(data, startDate, endDate) {
         const dateColumnIndex = 0;  // Dispatch Date is in column 0
         return data.filter((row, index) => {
@@ -86,63 +70,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const dispatchDateStr = row[dateColumnIndex];
             const dispatchDate = parseDate(dispatchDateStr);
-
             return isWithinDateRange(dispatchDate, startDate, endDate);
         });
     }
 
-    // Filter Press Data by Date and Press Type
     function filterPressDataByDate(data, startDate, endDate, pressType) {
         const dateColumnIndex = 0;  // Production Date is in column 0
         return data.filter((row, index) => {
-            if (index === 0) return true; // Keep header row
+            if (index === 0) return true;
 
             const productionDateStr = row[dateColumnIndex];
             const productionDate = parseDate(productionDateStr);
-
             const isInDateRange = isWithinDateRange(productionDate, startDate, endDate);
-
-           
             const isCorrectPressType = row[7]?.trim() === pressType;
-
-            
-            console.log(`Row: ${row}, Date: ${productionDate}, Is Correct Press Type: ${isCorrectPressType}`);
 
             return isInDateRange && isCorrectPressType;
         });
     }
 
-    
     function parseDate(dateStr) {
         const [day, month, year] = dateStr.split('/');
         return new Date(`${year}-${month}-${day}`);
     }
 
-    // Helper function to check if a date is within the specified range
     function isWithinDateRange(date, startDate, endDate) {
         const start = startDate ? new Date(startDate) : null;
         const end = endDate ? new Date(endDate) : null;
         return (!start || date >= start) && (!end || date <= end);
     }
 
-    // Function to calculate totals for HP01 and HP02 presses
     function calculatePressTotals(pressData) {
         let hp01Total = 0;
         let hp02Total = 0;
 
-        // the LOAD ID is in column () and quantity in column ()
         pressData.forEach(row => {
             if (row[7] === 'HP01') {
-                hp01Total += parseInt(row[5]) || 0; // column for quantity for HP01 press
+                hp01Total += parseInt(row[5]) || 0; // Column 5 is quantity for HP01 press
             } else if (row[7] === 'HP02') {
-                hp02Total += parseInt(row[5]) || 0; // column for quantity for HP02 press
+                hp02Total += parseInt(row[5]) || 0; // Column 5 is quantity for HP02 press
             }
         });
 
         return { hp01Total, hp02Total };
     }
 
-   
     function calculateTotalDispatch(data) {
         return data.slice(1).reduce((sum, row) => {
             const dispatchQuantity = parseInt(row[2]) || 0; // Dispatch quantity is in column 2
@@ -150,26 +121,22 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 0);
     }
 
-    
     function calculateTotalOrders(data) {
-        return data.slice(1).reduce((sum, row) => sum + (parseInt(row[2]) || 0), 0);
+        // Simply count the total number of entries (including duplicates)
+        return data.length - 1; // Subtract 1 to exclude the header row
     }
 
-    
     function calculateTotalQtyOrdered(data) {
         return data.slice(1).reduce((sum, row) => sum + (parseInt(row[5]) || 0), 0);
     }
 
-    
     function calculateTotalProduction(data) {
         return data.slice(1).reduce((sum, row) => sum + (parseInt(row[5]) || 0), 0);
     }
 
-    
     function updateDashboard() {
         const { orders, dispatch, press1, press2 } = filterDataByDate();
 
-        
         const totals = orders.length > 1 || dispatch.length > 1 || press1.length > 1 || press2.length > 1
             ? {
                 totalOrders: calculateTotalOrders(orders),
@@ -186,29 +153,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 totalProductionPress2: 0
             };
 
-        const pressTotals1 = orders.length > 1 || press1.length > 1 
+        const pressTotals1 = press1.length > 1 
             ? calculatePressTotals(press1) 
             : { hp01Total: 0, hp02Total: 0 };
 
-        const pressTotals2 = orders.length > 1 || press2.length > 1 
+        const pressTotals2 = press2.length > 1 
             ? calculatePressTotals(press2) 
             : { hp01Total: 0, hp02Total: 0 };
 
-        
+        // Update the dashboard cards with new data
         document.getElementById('total-orders').textContent = totals.totalOrders;
         document.getElementById('total-qty-ordered').textContent = totals.totalQtyOrdered;
         document.getElementById('total-dispatch').textContent = totals.totalDispatch;
         document.getElementById('total-production-press1').textContent = totals.totalProductionPress1;
         document.getElementById('total-production-press2').textContent = totals.totalProductionPress2;
-        
-       
+
         document.getElementById('hp01-press1').textContent = `HP01 Press1: ${pressTotals1.hp01Total}`;
         document.getElementById('hp02-press1').textContent = `HP02 Press1: ${pressTotals1.hp02Total}`;
         document.getElementById('hp01-press2').textContent = `HP01 Press2: ${pressTotals2.hp01Total}`;
         document.getElementById('hp02-press2').textContent = `HP02 Press2: ${pressTotals2.hp02Total}`;
     }
 
-    
     window.applyDateFilter = function() {
         updateDashboard(); 
     };
