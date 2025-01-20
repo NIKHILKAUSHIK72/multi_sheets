@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // CSV URLs for each sheet
-    const ordersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuFQgA8IkJFk4SXreMAjvy0ICZY3f1dYeiDIe5sxhp1EEaL5B-iSRzuzH-GSkBYclPapzOXIGyXKsc/pub?output=csv&sheet=Orders";
+    
+    const ordersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRL7estp0t6qMSITkLQHicmLSijQu74oxhOc3dVtNP9TryGu8VoyKrw3ecaGbwkWUDikrX7Rcz8XW-/pub?gid=2142342141&single=true&output=csv&sheet=Sheet7";
     const dispatchUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQHI7lyC_Dt5v8lJYm3UZN4ZsktGq-n9QbCbUWGlxA4qIzGOm1LHSUfFVJz4oVTdnX-CO3rgVn1XSux/pub?gid=0&single=true&output=csv&sheet=DISPATCH";
     const press1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgGViYleh1IOBFTCWpNGHmlr0lh4XK0JUAbaJKLcnmLmx3FdWk10er0e5KT0r78jetl4mNlvkuEAFN/pub?gid=0&single=true&output=csv&sheet=RAW DATA";
     const press2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgGViYleh1IOBFTCWpNGHmlr0lh4XK0JUAbaJKLcnmLmx3FdWk10er0e5KT0r78jetl4mNlvkuEAFN/pub?gid=0&single=true&output=csv&sheet=RAW DATA";
 
     let ordersRows, dispatchRows, press1Rows, press2Rows;
 
-    // Fetch data from multiple sheets (CSV)
+    
     Promise.all([
         fetch(ordersUrl).then(res => res.text()),
         fetch(dispatchUrl).then(res => res.text()),
@@ -21,19 +21,19 @@ document.addEventListener("DOMContentLoaded", function() {
         press1Rows = parseCSV(press1Data);
         press2Rows = parseCSV(press2Data);
 
-        // Initial calculation for totals
+        
         updateDashboard();
     })
     .catch(error => {
         console.error("Error fetching data: ", error);
     });
 
-    // Function to parse CSV data and return rows as arrays
+    
     function parseCSV(csvData) {
         return csvData.split('\n').map(row => row.split(','));
     }
 
-    // Apply date filter for all fields
+    
     function filterDataByDate() {
         const startDate = document.getElementById('start-date').value;
         const endDate = document.getElementById('end-date').value;
@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Start Date: ", startDate);
         console.log("End Date: ", endDate);
 
-        // If no dates are set, return all data for all fields
+        
         if (!startDate && !endDate) {
-            return { orders: [], dispatch: [], press1: [], press2: [] }; // Empty data sets to show zeroes
+            return { orders: [], dispatch: [], press1: [], press2: [] }; 
         }
 
         const filteredOrders = filterOrdersByDate(ordersRows, startDate, endDate);
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const filteredPress1 = filterPressDataByDate(press1Rows, startDate, endDate, 'HP01');
         const filteredPress2 = filterPressDataByDate(press2Rows, startDate, endDate, 'HP02');
 
-        // Log filtered data to see what is returned
+        
         console.log("Filtered Orders: ", filteredOrders);
         console.log("Filtered Dispatch: ", filteredDispatch);
         console.log("Filtered Press1 (HP01): ", filteredPress1);
@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 
-    // Filter Orders by Date
+    
     function filterOrdersByDate(data, startDate, endDate) {
         const dateColumnIndex = 0;  // Orders Date is in column 0
         return data.filter((row, index) => {
-            if (index === 0) return true; // Keep header row
+            if (index === 0) return true; 
 
             const orderDateStr = row[dateColumnIndex];
             const orderDate = parseDate(orderDateStr);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function filterDispatchByDate(data, startDate, endDate) {
         const dateColumnIndex = 0;  // Dispatch Date is in column 0
         return data.filter((row, index) => {
-            if (index === 0) return true; // Keep header row
+            if (index === 0) return true; 
 
             const dispatchDateStr = row[dateColumnIndex];
             const dispatchDate = parseDate(dispatchDateStr);
@@ -102,17 +102,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const isInDateRange = isWithinDateRange(productionDate, startDate, endDate);
 
-            // Ensure the press type is correct
+           
             const isCorrectPressType = row[7]?.trim() === pressType;
 
-            // Debugging: Log filtering status
+            
             console.log(`Row: ${row}, Date: ${productionDate}, Is Correct Press Type: ${isCorrectPressType}`);
 
             return isInDateRange && isCorrectPressType;
         });
     }
 
-    // Helper function to parse DD/MM/YYYY format into a Date object
+    
     function parseDate(dateStr) {
         const [day, month, year] = dateStr.split('/');
         return new Date(`${year}-${month}-${day}`);
@@ -130,19 +130,19 @@ document.addEventListener("DOMContentLoaded", function() {
         let hp01Total = 0;
         let hp02Total = 0;
 
-        // Assuming that the LOAD ID is in column 0 and quantity in column 1
+        // the LOAD ID is in column () and quantity in column ()
         pressData.forEach(row => {
             if (row[7] === 'HP01') {
-                hp01Total += parseInt(row[5]) || 0; // Add quantity for HP01 press
+                hp01Total += parseInt(row[5]) || 0; // column for quantity for HP01 press
             } else if (row[7] === 'HP02') {
-                hp02Total += parseInt(row[5]) || 0; // Add quantity for HP02 press
+                hp02Total += parseInt(row[5]) || 0; // column for quantity for HP02 press
             }
         });
 
         return { hp01Total, hp02Total };
     }
 
-    // Calculate total dispatch quantity (from Dispatch sheet)
+   
     function calculateTotalDispatch(data) {
         return data.slice(1).reduce((sum, row) => {
             const dispatchQuantity = parseInt(row[2]) || 0; // Dispatch quantity is in column 2
@@ -150,26 +150,26 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 0);
     }
 
-    // Calculate total orders from Orders sheet (assuming column 1 contains orders)
+    
     function calculateTotalOrders(data) {
-        return data.slice(1).reduce((sum, row) => sum + (parseInt(row[1]) || 0), 0);
-    }
-
-    // Calculate total qty ordered from Orders sheet (assuming column 2 contains qty)
-    function calculateTotalQtyOrdered(data) {
         return data.slice(1).reduce((sum, row) => sum + (parseInt(row[2]) || 0), 0);
     }
 
-    // Calculate total production (from Production Press sheets)
+    
+    function calculateTotalQtyOrdered(data) {
+        return data.slice(1).reduce((sum, row) => sum + (parseInt(row[5]) || 0), 0);
+    }
+
+    
     function calculateTotalProduction(data) {
         return data.slice(1).reduce((sum, row) => sum + (parseInt(row[5]) || 0), 0);
     }
 
-    // Update dashboard with the totals
+    
     function updateDashboard() {
         const { orders, dispatch, press1, press2 } = filterDataByDate();
 
-        // Check if data is available (i.e., whether filtering returned results)
+        
         const totals = orders.length > 1 || dispatch.length > 1 || press1.length > 1 || press2.length > 1
             ? {
                 totalOrders: calculateTotalOrders(orders),
@@ -194,22 +194,22 @@ document.addEventListener("DOMContentLoaded", function() {
             ? calculatePressTotals(press2) 
             : { hp01Total: 0, hp02Total: 0 };
 
-        // Display totals on the dashboard
+        
         document.getElementById('total-orders').textContent = totals.totalOrders;
         document.getElementById('total-qty-ordered').textContent = totals.totalQtyOrdered;
         document.getElementById('total-dispatch').textContent = totals.totalDispatch;
         document.getElementById('total-production-press1').textContent = totals.totalProductionPress1;
         document.getElementById('total-production-press2').textContent = totals.totalProductionPress2;
         
-        // Display HP01 and HP02 totals for each press
+       
         document.getElementById('hp01-press1').textContent = `HP01 Press1: ${pressTotals1.hp01Total}`;
         document.getElementById('hp02-press1').textContent = `HP02 Press1: ${pressTotals1.hp02Total}`;
         document.getElementById('hp01-press2').textContent = `HP01 Press2: ${pressTotals2.hp01Total}`;
         document.getElementById('hp02-press2').textContent = `HP02 Press2: ${pressTotals2.hp02Total}`;
     }
 
-    // Apply date filter when the user clicks the button
+    
     window.applyDateFilter = function() {
-        updateDashboard();  // Recalculate totals based on the current filter
+        updateDashboard(); 
     };
 });
