@@ -9,7 +9,7 @@ body {
 
 /* Sidebar Styling */
 .sidebar {
-    background-color:lightgreen;
+    background-color:orange;
     color: black;
     width: 250px; /* Set the width of the sidebar */
     padding: 20px;
@@ -90,7 +90,7 @@ body {
 .date-filter button {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: #1abc9c;
+    background-color: orange;
     color: white;
     border: none;
     border-radius: 4px;
