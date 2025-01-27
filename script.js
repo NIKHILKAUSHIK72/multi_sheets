@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    const ordersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRL7estp0t6qMSITkLQHicmLSijQu74oxhOc3dVtNP9TryGu8VoyKrw3ecaGbwkWUDikrX7Rcz8XW-/pub?gid=2142342141&single=true&output=csv&sheet=Sheet7";
+    const ordersUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRL7estp0t6qMSITkLQHicmLSijQu74oxhOc3dVtNP9TryGu8VoyKrw3ecaGbwkWUDikrX7Rcz8XW-/pub?gid=2142342141&single=true&output=csv";
     const dispatchUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQHI7lyC_Dt5v8lJYm3UZN4ZsktGq-n9QbCbUWGlxA4qIzGOm1LHSUfFVJz4oVTdnX-CO3rgVn1XSux/pub?gid=0&single=true&output=csv&sheet=DISPATCH";
     const press1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgGViYleh1IOBFTCWpNGHmlr0lh4XK0JUAbaJKLcnmLmx3FdWk10er0e5KT0r78jetl4mNlvkuEAFN/pub?gid=0&single=true&output=csv&sheet=RAW DATA";
     const press2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRgGViYleh1IOBFTCWpNGHmlr0lh4XK0JUAbaJKLcnmLmx3FdWk10er0e5KT0r78jetl4mNlvkuEAFN/pub?gid=0&single=true&output=csv&sheet=RAW DATA";
@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch(press2Url).then(res => res.text())
     ])
     .then(([ordersData, dispatchData, press1Data, press2Data]) => {
-        // Parse the CSV data for each sheet
+        
         ordersRows = parseCSV(ordersData);
         dispatchRows = parseCSV(dispatchData);
         press1Rows = parseCSV(press1Data);
         press2Rows = parseCSV(press2Data);
 
-        updateDashboard(); // Update dashboard when data is fetched
+        updateDashboard(); 
     })
     .catch(error => {
         console.error("Error fetching data: ", error);
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function filterOrdersByDate(data, startDate, endDate) {
-        const dateColumnIndex = 0;  // Orders Date is in column 0
+        const dateColumnIndex = 0;  
         return data.filter((row, index) => {
             if (index === 0) return true; 
 
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function filterDispatchByDate(data, startDate, endDate) {
-        const dateColumnIndex = 0;  // Dispatch Date is in column 0
+        const dateColumnIndex = 0;  
         return data.filter((row, index) => {
             if (index === 0) return true; 
 
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function filterPressDataByDate(data, startDate, endDate, pressType) {
-        const dateColumnIndex = 0;  // Production Date is in column 0
+        const dateColumnIndex = 0;  
         return data.filter((row, index) => {
             if (index === 0) return true;
 
@@ -105,9 +105,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         pressData.forEach(row => {
             if (row[7] === 'HP01') {
-                hp01Total += parseInt(row[5]) || 0; // Column 5 is quantity for HP01 press
+                hp01Total += parseInt(row[5]) || 0; 
             } else if (row[7] === 'HP02') {
-                hp02Total += parseInt(row[5]) || 0; // Column 5 is quantity for HP02 press
+                hp02Total += parseInt(row[5]) || 0; 
             }
         });
 
@@ -116,14 +116,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function calculateTotalDispatch(data) {
         return data.slice(1).reduce((sum, row) => {
-            const dispatchQuantity = parseInt(row[2]) || 0; // Dispatch quantity is in column 2
+            const dispatchQuantity = parseInt(row[2]) || 0; 
             return sum + dispatchQuantity;
         }, 0);
     }
 
     function calculateTotalOrders(data) {
-        // Simply count the total number of entries (including duplicates)
-        return data.length - 1; // Subtract 1 to exclude the header row
+        
+        return data.length - 1; 
     }
 
     function calculateTotalQtyOrdered(data) {
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ? calculatePressTotals(press2) 
             : { hp01Total: 0, hp02Total: 0 };
 
-        // Update the dashboard cards with new data
+        
         document.getElementById('total-orders').textContent = totals.totalOrders;
         document.getElementById('total-qty-ordered').textContent = totals.totalQtyOrdered;
         document.getElementById('total-dispatch').textContent = totals.totalDispatch;
