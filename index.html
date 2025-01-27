@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMBA LAMINATES </title>
+    <title>AMBA LAMINATES</title>
     <link rel="icon" href="images.jpg"  type="image/x-icon">
-    <link rel="stylesheet" href="s.css">
+    <link rel="stylesheet" href="s1.css">
 </head>
 <body>
-    <div class="container">
-        
-        <!-- Sidebar Section -->
+    <!-- Admin Login Form -->
+    <div id="login-form" class="login-form">
+        <h2>AMBA LAMINATES</h2>
+        <label for="username">ADMIN</label>
+        <input type="text" id="username" placeholder="Enter User Name"
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="authenticateAdmin()">Login</button>
+    </div>
+
+    <!-- Dashboard (Initially Hidden) -->
+    <div id="dashboard" class="container" style="display: none;">
         <div class="sidebar">
-            <h2>AMBA LAMINATES PVT LTD.<BR>(ALL SHEETS)</h2>
+            <h2>AMBA LAMINATES PVT LTD.<br><br>( ALL SHEETS)</h2>
             <ul>
                 <li><a href="https://docs.google.com/spreadsheets/d/1bKCOEyLMtY6-fqqrW47L1ZmfKMW8GJS5Gyb-7k_8HSI/edit?usp=sharing">PRODUCTION TRACK</a></li>
                 <li><a href="https://docs.google.com/spreadsheets/d/1V_97CNeyZCySI7obEGEdvWvIKB-_oIGcQe9vP_RUxcc/edit?usp=sharing">TOTAL DISPATCH</a></li>
-                <li><a href="https://docs.google.com/spreadsheets/d/1YP9Y9wTyrJZ3Fn-3oSvgMsEPMvKMeqfs4LDAM0A9cXE/edit?usp=sharing">ORDER TO DELIVERY FMS APR 2024</a></li>
+                <li><a href="https://docs.google.com/spreadsheets/d/1YP9Y9wTyrJZ3Fn-3oSvgMsEPMvKMeqfs4LDAM0A9cXE/edit?usp=sharing">ORDER TO DELIVERY FMS APR-2024</a></li>
                 <li><a href="https://docs.google.com/spreadsheets/d/1HtnhzcBfbcXc5UA8adHIzFtTiug2zRUVLlXO54pFkGk/edit?usp=sharing">FACTORY STOCK SEPTEMBER IMS</a></li>
             </ul>
         </div>
 
-        <!-- Main Dashboard Section -->
         <div class="dashboard">
-            <h1 style="text-align: center;">AMBA LAMINATES PVT LTD. 
-            </h1>
-            
-            <!-- Date Filter Section -->
+            <h1 style="text-align: center;">AMBA LAMINATES PVT LTD.</h1>
             <div class="date-filter">
                 <label for="start-date">Start Date:</label>
                 <input type="date" id="start-date">
@@ -34,8 +39,6 @@
                 <input type="date" id="end-date">
                 <button onclick="applyDateFilter()">Apply Filter</button>
             </div>
-
-            <!-- Stats Section -->
             <div class="stats">
                 <div class="stat-card">
                     <h2>Total Orders</h2>
@@ -61,6 +64,25 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="values.js"></script>
+    <script>
+        // Authentication details
+        const validUsername = "admin";
+        const validPassword = "ambalam@85";
+
+        // Function to handle login
+        function authenticateAdmin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === validUsername && password === validPassword) {
+                // Hide login form and show dashboard
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+    </script>
 </body>
 </html>
