@@ -10,15 +10,14 @@
 <body>
     <!-- Admin Login Form -->
     <div id="login-form" class="login-form">
-        <h2>AMBA LAMINATES</h2>
-        <label for="username">ADMIN</label>
+        <h2>Login</h2>
+        <label for="username"></label>
         <input type="text" id="username" placeholder="Enter User Name">
-        <label for="password">Password</label>
+        <label for="password"></label>
         <input type="password" id="password" placeholder="Enter Password">
         <button onclick="authenticateAdmin()">Login</button>
     </div>
 
-    <!-- Dashboard (Initially Hidden) -->
     <div id="dashboard" class="container" style="display: none;">
         <div class="sidebar" id="sidebar">
             <h2>AMBA LAMINATES PVT LTD.<br><br>( ALL SHEETS)</h2>
@@ -66,31 +65,27 @@
 
     <script src="script.js"></script>
     <script>
-        // Authentication details
-        const validUsername = "admin";
-        const validPassword = "ambalam@85";
+        const validAdminUsername = "admin";
+        const validAdminPassword = "ambalam@85";
+        const validUser1Username = "user1";
+        const validUser1Password = "user@123";
 
-        // Function to handle login
         function authenticateAdmin() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (username === validUsername && password === validPassword) {
-                // Hide login form and show dashboard
+            if (username === validAdminUsername && password === validAdminPassword) {
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-
-                // Show sidebar only if username is "admin"
-                document.getElementById('sidebar').style.display = 'block';
+                document.getElementById('sidebar').style.display = 'block'; 
+            } else if (username === validUser1Username && password === validUser1Password) {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('sidebar').style.display = 'none'; 
             } else {
-                // Show login form if authentication fails
-                alert("Invalid username or password. Please try again.");
-
-                // If not "admin", still proceed with showing the dashboard without sidebar
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-
-                // Hide the sidebar for non-admin users
+                alert("Invalid username or password");
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('dashboard').style.display = 'none';
                 document.getElementById('sidebar').style.display = 'none';
             }
         }
@@ -99,7 +94,6 @@
 </html>
 
 <style>
-/* Styling for the body */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -109,7 +103,6 @@ body {
     background-color: lightyellow;
 }
 
-/* Sidebar Styling */
 .sidebar {
     background-color: lightgreen;
     color: black;
@@ -120,7 +113,7 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    display: none; /* Initially hidden */
+    display: none;
 }
 
 .sidebar h2 {
@@ -148,7 +141,6 @@ body {
     color: lightcoral;
 }
 
-/* Main Dashboard Section */
 .container {
     display: flex;
     margin-left: 250px;
@@ -157,7 +149,6 @@ body {
     overflow-x: auto;
 }
 
-/* Dashboard Content */
 .dashboard {
     width: 100%;
     text-align: center;
@@ -169,7 +160,6 @@ body {
     color: #34495e;
 }
 
-/* Date Filter Section */
 .date-filter {
     margin-bottom: 30px;
     display: flex;
@@ -204,14 +194,12 @@ body {
     background-color: #16a085;
 }
 
-/* Stats Section */
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
-/* Stat Card Styling */
 .stat-card {
     background-color: #ffffff;
     padding: 20px;
@@ -238,7 +226,6 @@ body {
     color: #1abc9c;
 }
 
-/* Login Form Styling */
 .login-form {
     width: 300px;
     margin: 100px auto;
