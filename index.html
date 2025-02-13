@@ -271,4 +271,96 @@ body {
 .login-form button:hover {
     background-color: #16a085;
 }
+
+/* Media Queries for Responsiveness */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .container {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .date-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 0;
+    }
+
+    .date-filter label,
+    .date-filter input,
+    .date-filter button {
+        font-size: 14px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .login-form {
+        width: 250px;
+    }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .container {
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .date-filter {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .date-filter label,
+    .date-filter input,
+    .date-filter button {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .login-form {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .login-form input,
+    .login-form button {
+        font-size: 14px;
+    }
+}
+
 </style>
